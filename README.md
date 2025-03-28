@@ -1,6 +1,6 @@
-# 📌 React Router DOM `createRoutesFromElements` Yöntemi
+# 📌 React Router DOM `Link` ve `NavLink` Kullanımı
 
-Bu bölüm, React Router DOM'un `createRoutesFromElements` yöntemini kullanarak bir React projesine yönlendirme (routing) eklemeyi adım adım açıklamaktadır. Bu yöntem, JSX kullanarak rotaları tanımlamanıza olanak tanır ve daha okunabilir bir yapı sunar.
+Bu bölüm, React Router DOM'un `Link` ve `NavLink` bileşenlerini kullanarak bir React projesinde gezinme bağlantıları oluşturmayı adım adım açıklamaktadır. Bu bileşenler, SPA (Single Page Application) yapısında sayfa yönlendirmeleri için kullanılır.
 
 ## React Router DOM Kurulumu
 
@@ -12,38 +12,59 @@ Aşağıdaki adımları izleyerek React Router DOM'u projenize ekleyebilirsiniz:
     npm install react-router-dom
     ```
 
-## `createRoutesFromElements` Yöntemi ile Örnek Kullanım
+## `Link` ve `NavLink` Kullanımı ile Örnek
 
-Aşağıda, `createRoutesFromElements` yöntemi kullanılarak bir yönlendirme sistemi oluşturma örneği verilmiştir:
+Aşağıda, `Link` ve `NavLink` bileşenlerini kullanarak bir gezinme sistemi oluşturma örneği verilmiştir:
 
 ```javascript
 import "./index.css";
-import { Route, createRoutesFromElements, RouterProvider, createBrowserRouter } from "react-router";
+import { Route, Routes, BrowserRouter, Link, NavLink } from "react-router-dom";
 import { Home, About, Courses } from "./pages/";
 
-const routes_second = createRoutesFromElements(
-    <Route>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/courses" element={<Courses />} />
-    </Route>
-);
-const router = createBrowserRouter(routes_second);
 function App() {
-    return <RouterProvider router={router} />;
+    return (
+        <BrowserRouter>
+            <nav>
+                <ul>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                        <NavLink to="/about" activeClassName="active">
+                            About
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/courses" activeClassName="active">
+                            Courses
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/courses" element={<Courses />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
 ```
 
-Bu örnekte, `createRoutesFromElements` yöntemi ile rotalar JSX formatında tanımlanmış ve `RouterProvider` bileşeni ile uygulamaya entegre edilmiştir. Farklı rotalar için `Home`, `About` ve `Courses` gibi bileşenler tanımlanmıştır.
+Bu örnekte:
+
+-   `Link` bileşeni, basit bir bağlantı oluşturur.
+-   `NavLink` bileşeni, aktif olan bağlantıya özel bir sınıf (`activeClassName`) ekler.
+-   `Routes` ve `Route` bileşenleri, sayfa yönlendirmelerini tanımlar.
 
 ## Ek Özellikler
 
-React Router DOM'un `createRoutesFromElements` yöntemi, aşağıdaki gibi avantajlar sunar:
+React Router DOM'un `Link` ve `NavLink` bileşenleri, aşağıdaki gibi avantajlar sunar:
 
--   **Daha Okunabilir Kod:** Rotaları JSX formatında tanımlayarak daha okunabilir bir yapı sağlar.
--   **Dinamik Rotalar:** Parametreler ile dinamik rotalar oluşturabilirsiniz.
--   **Kolay Yönetim:** Rotaları bir arada tanımlayarak daha kolay bir yönetim imkanı sunar.
+-   **SPA Gezinmesi:** Sayfa yeniden yüklenmeden yönlendirme sağlar.
+-   **Aktif Durum Yönetimi:** `NavLink` ile aktif bağlantılar için özel stiller tanımlanabilir.
+-   **Kolay Kullanım:** Basit bir API ile gezinme bağlantıları oluşturabilirsiniz.
 
 Daha fazla bilgi için [React Router resmi dokümantasyonuna](https://reactrouter.com/) göz atabilirsiniz.
