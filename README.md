@@ -1,48 +1,23 @@
-# 📌 Adım 1: Proje Kurulumu (Vite ile ReactJS)
+# 📌 React Router DOM Kurulumu
 
-Bu rehber, Vite ile ReactJS projesi kurulumunu adım adım açıklamaktadır. Vite, hızlı bir geliştirme ortamı sunar ve React ile kolayca entegre edilebilir.
+Bu bölüm, React Router DOM kullanarak bir React projesine yönlendirme (routing) eklemeyi adım adım açıklamaktadır. React Router DOM, React uygulamalarında sayfa yönlendirmesi yapmak için kullanılan popüler bir kütüphanedir.
 
-## React + Vite
+## React Router DOM Kurulumu
 
-Bu şablon, React'i Vite ile HMR (Hot Module Replacement) ve bazı ESLint kurallarıyla çalıştırmak için minimal bir yapı sağlar.
+Aşağıdaki adımları izleyerek React Router DOM'u projenize ekleyebilirsiniz:
 
-Şu anda iki resmi eklenti mevcuttur:
-
--   [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md): [Babel](https://babeljs.io/) kullanarak Fast Refresh sağlar.
--   [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc): [SWC](https://swc.rs/) kullanarak Fast Refresh sağlar.
-
-## Vite React Kurulumu
-
-Aşağıdaki adımları izleyerek Vite ile React projesi kurabilirsiniz:
-
-1. Yeni bir proje oluşturmak için terminalde aşağıdaki komutu çalıştırın:
+1. React Router DOM kütüphanesini yükleyin:
 
     ```bash
-    npm create vite@latest my-react-app -- --template react
+    npm install react-router-dom
     ```
 
-    Burada `my-react-app` projenizin adıdır. İstediğiniz bir isim verebilirsiniz.
+## Ek Özellikler
 
-2. Proje dizinine gidin:
+React Router DOM, aşağıdaki gibi birçok gelişmiş özellik sunar:
 
-    ```bash
-    cd my-react-app
-    ```
+-   **Dinamik Rotalar:** Parametreler ile dinamik rotalar oluşturabilirsiniz.
+-   **Yönlendirme (Redirect):** Kullanıcıları belirli bir rotaya yönlendirebilirsiniz.
+-   **Korunan Rotalar:** Kimlik doğrulama gerektiren rotalar oluşturabilirsiniz.
 
-3. Gerekli bağımlılıkları yükleyin:
-
-    ```bash
-    npm install
-    ```
-
-4. Geliştirme sunucusunu başlatın:
-
-    ```bash
-    npm run dev
-    ```
-
-5. Tarayıcınızda `http://localhost:5173` adresine giderek uygulamanızı görüntüleyebilirsiniz.
-
-## ESLint Yapılandırmasını Genişletme
-
-Eğer bir üretim uygulaması geliştiriyorsanız, TypeScript kullanmanızı ve tür farkındalığına sahip lint kurallarını etkinleştirmenizi öneririz. Projenize TypeScript ve [`typescript-eslint`](https://typescript-eslint.io) entegrasyonu yapmak için [TS şablonuna](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) göz atabilirsiniz.
+Daha fazla bilgi için [React Router resmi dokümantasyonuna](https://reactrouter.com/) göz atabilirsiniz.
