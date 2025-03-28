@@ -1,4 +1,4 @@
-# 📌 React Router DOM Kurulumu
+# 📌 React Router DOM Kullanımı
 
 Bu bölüm, React Router DOM kullanarak bir React projesine yönlendirme (routing) eklemeyi adım adım açıklamaktadır. React Router DOM, React uygulamalarında sayfa yönlendirmesi yapmak için kullanılan popüler bir kütüphanedir.
 
@@ -11,6 +11,43 @@ Aşağıdaki adımları izleyerek React Router DOM'u projenize ekleyebilirsiniz:
     ```bash
     npm install react-router-dom
     ```
+
+## Örnek Kullanım
+
+Aşağıda, React Router DOM kullanarak bir yönlendirme sistemi oluşturma örneği verilmiştir:
+
+```javascript
+import "./index.css";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import { Home, About, Courses } from "./pages/";
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Home />,
+    },
+    {
+        path: "/Home",
+        element: <Home />,
+    },
+    {
+        path: "/about",
+        element: <About />,
+    },
+    {
+        path: "/Courses",
+        element: <Courses />,
+    },
+]);
+
+function App() {
+    return <RouterProvider router={router} />;
+}
+
+export default App;
+```
+
+Bu örnekte, `createBrowserRouter` fonksiyonu ile bir yönlendirme sistemi oluşturulmuş ve `RouterProvider` bileşeni ile uygulamaya entegre edilmiştir. Farklı rotalar için `Home`, `About` ve `Courses` gibi bileşenler tanımlanmıştır.
 
 ## Ek Özellikler
 
