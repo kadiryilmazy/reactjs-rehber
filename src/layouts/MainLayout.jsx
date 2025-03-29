@@ -6,9 +6,12 @@ export default function MainLayout() {
         <div id="main-layout">
             <h1>MainLayout</h1>
             <nav>
-                <NavLink to="/home">Home</NavLink>
-                <NavLink to="/about">About</NavLink>
-                <NavLink to="/courses">Courses</NavLink>
+                <NavLink to="/" end>
+                    Home
+                </NavLink>
+                <NavLink to="about">About</NavLink>
+                <NavLink to="courses">Courses</NavLink>
+                <NavLink to="help">Help</NavLink>
             </nav>
             <main>
                 <Outlet />

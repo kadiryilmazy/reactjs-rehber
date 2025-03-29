@@ -1,6 +1,4 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
-
 export default function Home() {
     return (
         <div id="home">
