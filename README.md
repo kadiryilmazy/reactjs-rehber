@@ -20,32 +20,35 @@ Aşağıda, `Link` ve `NavLink` bileşenlerini kullanarak bir gezinme sistemi ol
 import "./index.css";
 import { Route, Routes, BrowserRouter, Link, NavLink } from "react-router-dom";
 import { Home, About, Courses } from "./pages/";
+import MainLayout from "./layouts/MainLayout";
 
 function App() {
     return (
         <BrowserRouter>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <NavLink to="/about" activeClassName="active">
-                            About
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/courses" activeClassName="active">
-                            Courses
-                        </NavLink>
-                    </li>
-                </ul>
-            </nav>
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/courses" element={<Courses />} />
-            </Routes>
+            <MainLayout>
+                <nav>
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                        <li>
+                            <NavLink to="/about" activeClassName="active">
+                                About
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/courses" activeClassName="active">
+                                Courses
+                            </NavLink>
+                        </li>
+                    </ul>
+                </nav>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/courses" element={<Courses />} />
+                </Routes>
+            </MainLayout>
         </BrowserRouter>
     );
 }
@@ -57,6 +60,7 @@ Bu örnekte:
 
 -   `Link` bileşeni, basit bir bağlantı oluşturur.
 -   `NavLink` bileşeni, aktif olan bağlantıya özel bir sınıf (`activeClassName`) ekler.
+-   `MainLayout` bileşeni, uygulamanın genel düzenini sağlar.
 -   `Routes` ve `Route` bileşenleri, sayfa yönlendirmelerini tanımlar.
 
 ## Ek Özellikler
