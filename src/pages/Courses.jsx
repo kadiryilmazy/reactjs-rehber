@@ -13,7 +13,7 @@ export default function Courses() {
                         <div>
                             <h4>{item.title}</h4>
                             <p>{item.description}</p>
-                            <a href="#">Detay</a>
+                            <Link to={"/courses/" + item.id}>Detay</Link>
                         </div>
                     </div>
                 ))}

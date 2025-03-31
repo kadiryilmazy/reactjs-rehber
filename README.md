@@ -1,77 +1,44 @@
-````markdown
-### React Router DOM Loaders
+### Rota Parametreleri
 
-React Router DOM Loaders, veri yükleme işlemlerini rotalarla entegre etmenizi sağlar. Bu özellik, bir rota yüklenmeden önce gerekli verilerin alınmasını ve bileşenlere aktarılmasını kolaylaştırır.
+React Router, rotalarınızda dinamik segmentler tanımlamanıza olanak tanır. Bu segmentlere rota parametreleri denir ve bileşenlerinizde dinamik ve esnek rotalar oluşturmak için kullanılabilir.
 
-#### Loader Kullanımı
+#### Rota Parametrelerini Tanımlama
 
-Bir loader tanımlamak için, rotanızın `loader` özelliğini kullanabilirsiniz. Loader, bir `Promise` döndüren bir fonksiyon olmalıdır.
+Rota parametrelerini, rota yolunda iki nokta üst üste (`:`) kullanarak tanımlayabilirsiniz:
 
 ```jsx
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import Dashboard from "./pages/Dashboard";
-import Settings from "./pages/Settings";
-
-async function dashboardLoader() {
-    const response = await fetch("/api/dashboard-data");
-    if (!response.ok) {
-        throw new Error("Veri yüklenemedi!");
-    }
-    return response.json();
-}
-
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <MainLayout />,
-        children: [
-            {
-                index: true,
-                element: <Dashboard />,
-                loader: dashboardLoader,
-            },
-            {
-                path: "settings",
-                element: <Settings />,
-            },
-        ],
-    },
-]);
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-    return <RouterProvider router={router} />;
-}
-
-export default App;
-```
-
-#### Loader'dan Gelen Verilere Erişim
-
-Loader'dan dönen verilere, bileşeninizde `useLoaderData` kancası ile erişebilirsiniz.
-
-```jsx
-import { useLoaderData } from "react-router-dom";
-
-function Dashboard() {
-    const data = useLoaderData();
-
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/kullanici/:id" element={<Kullanici />} />
+            </Routes>
+        </Router>
     );
 }
-
-export default Dashboard;
 ```
 
-#### Loader Avantajları
+#### Rota Parametrelerine Erişim
 
--   **Veri Yönetimi**: Rotaya özel veri yükleme işlemlerini kolaylaştırır.
--   **Performans**: Rota yüklenmeden önce gerekli verilerin alınmasını sağlar.
--   **Hata Yönetimi**: Veri yükleme sırasında oluşan hataları yakalayabilir ve yönetebilirsiniz.
+Parametrelere bileşeninizde erişmek için `useParams` kancasını kullanabilirsiniz:
 
-Daha fazla bilgi için [React Router Loaders dokümantasyonuna](https://reactrouter.com/en/main/start/overview#data-loading) göz atabilirsiniz.
-````
+```jsx
+import { useParams } from "react-router-dom";
+
+function Kullanici() {
+    const { id } = useParams();
+    return <h1>Kullanıcı ID: {id}</h1>;
+}
+```
+
+#### Örnek
+
+Eğer `/kullanici/123` adresine giderseniz, `Kullanici` bileşeni şu şekilde render edilir:
+
+```
+Kullanıcı ID: 123
+```
+
+Bu özellik, kullanıcı profilleri, ürün detayları veya içerik odaklı diğer rotalar gibi dinamik sayfalar oluşturmak için oldukça kullanışlıdır.

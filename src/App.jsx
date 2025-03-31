@@ -1,9 +1,10 @@
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router";
-import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage } from "./pages/";
+import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage } from "./pages/";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
 import { coursesLoader } from "./pages/Courses";
+import { CourseDetailsLoader } from "./pages/CourseDetails";
 
 const router = createBrowserRouter([
     {
@@ -26,6 +27,11 @@ const router = createBrowserRouter([
                 path: "courses",
                 element: <CoursesPage />,
                 loader: coursesLoader,
+            },
+            {
+                path: "courses/:courseid/",
+                element: <CourseDetailsPage />,
+                loader: CourseDetailsLoader,
             },
             {
                 path: "help",
