@@ -1,16 +1,27 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
+import { Link, NavLink, useLoaderData } from "react-router";
 
-function Courses() {
+export default function Courses() {
+    const courses = useLoaderData();
     return (
-        <div id="coursesS">
+        <>
             <h1>Courses</h1>
-            <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et id illum nisi facere, labore doloremque unde quidem, eos accusantium qui maxime ipsum deleniti aperiam consequuntur, commodi
-                eligendi temporibus fugiat optio?
-            </p>
-        </div>
+            <div id="courses">
+                {courses.map((item) => (
+                    <div key={item.id} className="card">
+                        <img src={`http://localhost:5000/images/${item.image}`} alt={item.title} />
+                        <div>
+                            <h4>{item.title}</h4>
+                            <p>{item.description}</p>
+                            <a href="#">Detay</a>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </>
     );
 }
-
-export default Courses;
+export async function coursesLoader() {
+    const res = await fetch("http://localhost:5000/courses");
+    return res.json();
+}

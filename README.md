@@ -1,74 +1,77 @@
-# 📌 React Router DOM `Link` ve `NavLink` Kullanımı
+````markdown
+### React Router DOM Loaders
 
-Bu bölüm, React Router DOM'un `Link` ve `NavLink` bileşenlerini kullanarak bir React projesinde gezinme bağlantıları oluşturmayı adım adım açıklamaktadır. Bu bileşenler, SPA (Single Page Application) yapısında sayfa yönlendirmeleri için kullanılır.
+React Router DOM Loaders, veri yükleme işlemlerini rotalarla entegre etmenizi sağlar. Bu özellik, bir rota yüklenmeden önce gerekli verilerin alınmasını ve bileşenlere aktarılmasını kolaylaştırır.
 
-## React Router DOM Kurulumu
+#### Loader Kullanımı
 
-Aşağıdaki adımları izleyerek React Router DOM'u projenize ekleyebilirsiniz:
+Bir loader tanımlamak için, rotanızın `loader` özelliğini kullanabilirsiniz. Loader, bir `Promise` döndüren bir fonksiyon olmalıdır.
 
-1. React Router DOM kütüphanesini yükleyin:
-
-    ```bash
-    npm install react-router-dom
-    ```
-
-## `Link` ve `NavLink` Kullanımı ile Örnek
-
-Aşağıda, `Link` ve `NavLink` bileşenlerini kullanarak bir gezinme sistemi oluşturma örneği verilmiştir:
-
-```javascript
-import "./index.css";
-import { Route, Routes, BrowserRouter, Link, NavLink } from "react-router-dom";
-import { Home, About, Courses } from "./pages/";
+```jsx
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
+import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
+
+async function dashboardLoader() {
+    const response = await fetch("/api/dashboard-data");
+    if (!response.ok) {
+        throw new Error("Veri yüklenemedi!");
+    }
+    return response.json();
+}
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <MainLayout />,
+        children: [
+            {
+                index: true,
+                element: <Dashboard />,
+                loader: dashboardLoader,
+            },
+            {
+                path: "settings",
+                element: <Settings />,
+            },
+        ],
+    },
+]);
 
 function App() {
-    return (
-        <BrowserRouter>
-            <MainLayout>
-                <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                        <li>
-                            <NavLink to="/about" activeClassName="active">
-                                About
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink to="/courses" activeClassName="active">
-                                Courses
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/courses" element={<Courses />} />
-                </Routes>
-            </MainLayout>
-        </BrowserRouter>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;
 ```
 
-Bu örnekte:
+#### Loader'dan Gelen Verilere Erişim
 
--   `Link` bileşeni, basit bir bağlantı oluşturur.
--   `NavLink` bileşeni, aktif olan bağlantıya özel bir sınıf (`activeClassName`) ekler.
--   `MainLayout` bileşeni, uygulamanın genel düzenini sağlar.
--   `Routes` ve `Route` bileşenleri, sayfa yönlendirmelerini tanımlar.
+Loader'dan dönen verilere, bileşeninizde `useLoaderData` kancası ile erişebilirsiniz.
 
-## Ek Özellikler
+```jsx
+import { useLoaderData } from "react-router-dom";
 
-React Router DOM'un `Link` ve `NavLink` bileşenleri, aşağıdaki gibi avantajlar sunar:
+function Dashboard() {
+    const data = useLoaderData();
 
--   **SPA Gezinmesi:** Sayfa yeniden yüklenmeden yönlendirme sağlar.
--   **Aktif Durum Yönetimi:** `NavLink` ile aktif bağlantılar için özel stiller tanımlanabilir.
--   **Kolay Kullanım:** Basit bir API ile gezinme bağlantıları oluşturabilirsiniz.
+    return (
+        <div>
+            <h1>Dashboard</h1>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+        </div>
+    );
+}
 
-Daha fazla bilgi için [React Router resmi dokümantasyonuna](https://reactrouter.com/) göz atabilirsiniz.
+export default Dashboard;
+```
+
+#### Loader Avantajları
+
+-   **Veri Yönetimi**: Rotaya özel veri yükleme işlemlerini kolaylaştırır.
+-   **Performans**: Rota yüklenmeden önce gerekli verilerin alınmasını sağlar.
+-   **Hata Yönetimi**: Veri yükleme sırasında oluşan hataları yakalayabilir ve yönetebilirsiniz.
+
+Daha fazla bilgi için [React Router Loaders dokümantasyonuna](https://reactrouter.com/en/main/start/overview#data-loading) göz atabilirsiniz.
+````

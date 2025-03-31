@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router";
 import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage } from "./pages/";
 import MainLayout from "./layouts/MainLayout";
 import HelpLayout from "./layouts/HelpLayout";
+import { coursesLoader } from "./pages/Courses";
 
 const router = createBrowserRouter([
     {
@@ -24,15 +25,12 @@ const router = createBrowserRouter([
             {
                 path: "courses",
                 element: <CoursesPage />,
+                loader: coursesLoader,
             },
             {
                 path: "help",
                 element: <HelpLayout />,
                 children: [
-                    {
-                        index: true,
-                        element: <ContactPage />,
-                    },
                     {
                         path: "contact",
                         element: <ContactPage />,
