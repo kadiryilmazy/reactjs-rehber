@@ -32,7 +32,7 @@ export default function CourseDetails() {
     );
 }
 
-export async function CourseDetailsLoader({ params }) {
+export async function courseDetailsLoader({ params }) {
     const { courseid } = params;
     const res = await fetch(`http://localhost:5000/courses/` + courseid);
     return res.json();
