@@ -1,6 +1,8 @@
 export { default as HomePage } from "./Home";
 export { default as AboutPage } from "./About";
-export { default as CoursesPage } from "./Courses";
+export { default as CoursesPage } from "./course/Courses";
 export { default as ContactPage } from "./help/Contact";
 export { default as FaqPage } from "./help/Faq";
-export { default as CourseDetailsPage } from "./CourseDetails";
+export { default as CourseDetailsPage } from "./course/CourseDetails";
+export { default as CourseEditPage } from "./course/CourseEdit";
+export { default as CourseCreatePage } from "./course/CourseCreate";

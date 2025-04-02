@@ -14,129 +14,148 @@
 }
 
 body {
+    background-color: var(--secondary);
     font-family: "Open Sans", sans-serif;
     padding: 20px;
-    background-color: var(--secondary);
 }
 
-p {
-    margin: 20px 0;
-}
-h1 {
-    margin-bottom: 5px 0;
-}
-
-header {
+.card {
+    border: 1px solid var(--secondary);
+    border-radius: 5px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-#help-layout nav {
-    display: flex;
-    justify-content: flex-start;
     gap: 10px;
-    margin: 20px 0;
+    margin-bottom: 20px;
+    padding: 10px;
 }
-#help-layout nav a {
-    border: 2px solid #fff;
-    padding: 6px;
+
+.card a {
+    background: var(--primary);
+    border: 0;
     border-radius: 4px;
-    margin: 20px 0;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 5px;
+    padding: 10px;
     text-decoration: none;
 }
 
-header nav a {
-    padding: 5px;
-    border-radius: 4px;
-    text-decoration: none;
+.card img {
+    border-radius: 5px;
 }
-nav a.active {
-    background-color: var(--primary);
-}
+
 .container {
-    max-width: 1200px;
     margin: 30px auto;
+    max-width: 1200px;
 }
 
-main {
-    padding: 20px;
-    border-radius: 10px;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#faq .question {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 15px 30px;
-    border-radius: 4px;
-    margin: 15px 0;
+.course-desc {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    margin: 20px 0;
 }
 
 form {
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    border-radius: 10px;
+}
+
+form button {
+    background: var(--primary);
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
 }
 
 form input,
 form label,
 form textarea {
-    padding: 5px;
-    display: block;
     border-radius: 4px;
+    display: block;
+    padding: 5px;
 }
 
 form input,
 form textarea {
+    border: 0;
+    color: #000;
     margin-bottom: 20px;
     padding: 10px;
-    border: 4px;
-    border: 0;
     width: 300px;
-    color: #000;
 }
+
 form textarea {
     height: 200px;
     width: 300px;
 }
 
-form button {
-    margin: 0 auto;
-    border: 0;
-    padding: 10px;
+header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav a {
     border-radius: 4px;
-    color: #fff;
-    background: var(--primary);
-    cursor: pointer;
-    display: block;
-    margin: 0 auto;
+    padding: 5px;
+    text-decoration: none;
+}
+
+h1 {
+    margin-bottom: 5px 0;
+}
+
+.icons {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+main {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+nav a.active {
+    background-color: var(--primary);
+}
+
+p {
+    margin: 20px 0;
 }
 
 #contact {
-    display: flex;
-    flex-direction: column;
     align-items: center;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
-.card {
+#course-layout nav {
     display: flex;
     gap: 10px;
-    border: 1px solid var(--secondary);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-.card img {
-    border-radius: 5px;
+    justify-content: flex-start;
+    margin: 20px 0;
 }
 
-.card a {
-    border: 0;
-    padding: 10px;
-    color: #fff;
-    background: var(--primary);
+#course-layout nav a {
+    border: 2px solid #fff;
     border-radius: 4px;
+    margin: 20px 0;
+    padding: 6px;
     text-decoration: none;
-    cursor: pointer;
+}
+
+#faq .question {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    margin: 15px 0;
+    padding: 15px 30px;
 }

@@ -1,11 +1,10 @@
 import React from "react";
-import { Link, NavLink, useLoaderData } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 export default function Courses() {
     const courses = useLoaderData();
     return (
         <>
-            <h1>Courses</h1>
             <div id="courses">
                 {courses.map((item) => (
                     <div key={item.id} className="card">
@@ -14,6 +13,7 @@ export default function Courses() {
                             <h4>{item.title}</h4>
                             <p>{item.description}</p>
                             <Link to={"/courses/" + item.id}>Detay</Link>
+                            <Link to={item.id + "/edit"}>Edit</Link>
                         </div>
                     </div>
                 ))}
