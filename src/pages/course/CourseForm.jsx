@@ -1,22 +1,28 @@
-import { redirect, useNavigation } from "react-router";
+import { redirect, useActionData, useNavigation } from "react-router";
 import { Form } from "react-router";
+import { isRequiredCheck, isValidImage } from "../../utils/validations";
 
 export default function CourseForm({ data, method }) {
     const navigation = useNavigation();
     const isSubmitting = navigation.state === "submitting";
+    const errors = useActionData();
+
     return (
         <Form method={method}>
             <div>
                 <label htmlFor="title">Title:</label>
-                <input type="text" name="title" id="title" required defaultValue={data ? data.title : ""} />
+                <input type="text" name="title" id="title" defaultValue={data ? data.title : ""} />
+                {errors && errors.title && <p>{errors.title}</p>}
             </div>
             <div>
                 <label htmlFor="image">Image:</label>
-                <input type="text" name="image" id="image" required defaultValue={data ? data.image : ""} />
+                <input type="text" name="image" id="image" defaultValue={data ? data.image : ""} />
+                {errors && errors.image && <p>{errors.image}</p>}
             </div>
             <div>
                 <label htmlFor="description">Description:</label>
-                <textarea name="description" required rows={5} defaultValue={data ? data.description : ""}></textarea>
+                <textarea name="description" rows={5} defaultValue={data ? data.description : ""}></textarea>
+                {errors && errors.description && <p>{errors.description}</p>}
             </div>
             <button disabled={isSubmitting} type="submit">
                 {isSubmitting ? "Kayıt Ediliyor" : "Kaydet"}
@@ -36,16 +42,31 @@ export async function courseAction({ request, params }) {
         url = url + "/" + courseid;
     }
 
-    const eventData = {
+    const formData = {
         title: data.get("title"),
         image: data.get("image"),
         description: data.get("description"),
     };
 
+    const errors = {};
+
+    if (!isRequiredCheck(formData.title)) {
+        errors.title = "Title alanı zorunlu";
+    }
+    if (!isRequiredCheck(formData.description)) {
+        errors.description = "Description alanı zorunlu";
+    }
+    if (!isValidImage(formData.image)) {
+        errors.image = "Image alanı zorunlu ve uzantı jpg,jpeg olmalıdır.";
+    }
+
+    if (Object.keys(errors)) {
+        return errors;
+    }
     const response = await fetch(url, {
         method: method,
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(eventData),
+        body: JSON.stringify(formData),
     });
 
     if (response.ok) {
