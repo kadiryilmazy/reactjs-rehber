@@ -1,79 +1,48 @@
-### Rota Parametreleri ve Ortak Yükleyici Verisi
+# useSubmit Hook
 
-React Router, rotalarınızda dinamik segmentler tanımlamanıza olanak tanır. Bu segmentlere rota parametreleri denir ve bileşenlerinizde dinamik ve esnek rotalar oluşturmak için kullanılabilir. Ayrıca, ortak yükleyici verisi kullanarak rotalar arasında veri paylaşımı yapabilirsiniz.
+`useSubmit` React Hook, form verilerini işlemek ve sunucuya göndermek için kullanılan bir yöntemdir. Bu hook, form gönderim işlemlerini kolaylaştırır ve kullanıcı etkileşimlerini yönetmenize olanak tanır.
 
-#### Rota Parametrelerini Tanımlama
+## Kullanım
 
-Rota parametrelerini, rota yolunda iki nokta üst üste (`:`) kullanarak tanımlayabilirsiniz:
+`useSubmit` genellikle bir formun gönderim işlemini kontrol etmek için kullanılır. Aşağıdaki örnek, temel bir kullanım senaryosunu göstermektedir:
 
 ```jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import { useSubmit } from "react-router-dom";
 
-function App() {
+function MyForm() {
+    const submit = useSubmit();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        submit(formData, { method: "post" });
+    };
+
     return (
-        <Router>
-            <Routes>
-                <Route path="/kullanici/:id" element={<Kullanici />} />
-            </Routes>
-        </Router>
-    );
-}
-```
-
-#### Rota Parametrelerine Erişim
-
-Parametrelere bileşeninizde erişmek için `useParams` kancasını kullanabilirsiniz:
-
-```jsx
-import { useParams } from "react-router-dom";
-
-function Kullanici() {
-    const { id } = useParams();
-    return <h1>Kullanıcı ID: {id}</h1>;
-}
-```
-
-#### Ortak Yükleyici Verisi Kullanımı
-
-React Router'da `loader` fonksiyonları ile rotalar arasında veri paylaşabilirsiniz. Örneğin:
-
-```jsx
-import { createBrowserRouter, RouterProvider, useLoaderData } from "react-router-dom";
-
-function Kullanici() {
-    const { id, userData } = useLoaderData();
-    return (
-        <div>
-            <h1>Kullanıcı ID: {id}</h1>
-            <p>Kullanıcı Adı: {userData.name}</p>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <label>
+                Ad:
+                <input type="text" name="name" required />
+            </label>
+            <button type="submit">Gönder</button>
+        </form>
     );
 }
 
-const router = createBrowserRouter([
-    {
-        path: "/kullanici/:id",
-        element: <Kullanici />,
-        loader: async ({ params }) => {
-            const response = await fetch(`/api/users/${params.id}`);
-            const userData = await response.json();
-            return { id: params.id, userData };
-        },
-    },
-]);
-
-function App() {
-    return <RouterProvider router={router} />;
-}
+export default MyForm;
 ```
 
-#### Örnek
+## Özellikler
 
-Eğer `/kullanici/123` adresine giderseniz ve API'den `{ "name": "Ahmet" }` dönerse, `Kullanici` bileşeni şu şekilde render edilir:
+-   **FormData ile Çalışma**: `useSubmit`, form verilerini `FormData` nesnesi olarak alır ve sunucuya göndermek için kullanır.
+-   **HTTP Metodları**: `method` parametresi ile `POST`, `GET`, `PUT` gibi HTTP metodlarını belirtebilirsiniz.
+-   **Esneklik**: Form gönderim işlemlerini özelleştirmek için kullanılabilir.
 
-```
-Kullanıcı ID: 123
-Kullanıcı Adı: Ahmet
-```
+## Avantajlar
 
-Bu özellik, kullanıcı profilleri, ürün detayları veya içerik odaklı diğer rotalar gibi dinamik sayfalar oluşturmak ve veri paylaşımı yapmak için oldukça kullanışlıdır.
+-   Form gönderim işlemlerini basitleştirir.
+-   React Router ile uyumlu çalışır.
+-   Sunucuya veri gönderiminde daha fazla kontrol sağlar.
+
+`useSubmit` ile form işlemlerini daha etkili bir şekilde yönetebilir ve kullanıcı deneyimini iyileştirebilirsiniz.

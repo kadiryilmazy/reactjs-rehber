@@ -2,6 +2,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage, CourseCreatePage, CourseEditPage, coursesLoader, courseDetailsLoader, courseAction } from "./pages/";
 import { MainLayout, CourseLayout, HelpLayout } from "./layouts";
+import { courseDeleteAction } from "./pages/course/Courses";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
                                 element: <CourseDetailsPage />,
                             },
                             { path: "edit", element: <CourseEditPage />, action: courseAction },
+                            { path: "delete", action: courseDeleteAction },
                         ],
                     },
                     {
