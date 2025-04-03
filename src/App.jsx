@@ -1,11 +1,7 @@
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage, CourseCreatePage, CourseEditPage } from "./pages/";
-import { MainLayout, HelpLayout, CourseLayout } from "./layouts";
-
-import { coursesLoader } from "./pages/course/Courses";
-import { courseDetailsLoader } from "./pages/course/CourseDetails";
-import { courseAction } from "./pages/course/CourseCreate";
+import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage, CourseCreatePage, CourseEditPage, coursesLoader, courseDetailsLoader, courseAction } from "./pages/";
+import { MainLayout, CourseLayout, HelpLayout } from "./layouts";
 
 const router = createBrowserRouter([
     {
@@ -38,7 +34,7 @@ const router = createBrowserRouter([
                                 index: true,
                                 element: <CourseDetailsPage />,
                             },
-                            { path: "edit", element: <CourseEditPage /> },
+                            { path: "edit", element: <CourseEditPage />, action: courseAction },
                         ],
                     },
                     {

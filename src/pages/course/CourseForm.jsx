@@ -1,8 +1,9 @@
+import { redirect } from "react-router";
 import { Form } from "react-router";
 
-export default function CourseForm({ data }) {
+export default function CourseForm({ data, method }) {
     return (
-        <Form method="POST">
+        <Form method={method}>
             <div>
                 <label htmlFor="title">Title:</label>
                 <input type="text" name="title" id="title" required defaultValue={data ? data.title : ""} />
@@ -18,4 +19,31 @@ export default function CourseForm({ data }) {
             <button type="submit">Submit</button>
         </Form>
     );
+}
+
+export async function courseAction({ request, params }) {
+    const data = await request.formData();
+    const method = request.method;
+    let url = "http://localhost:5000/courses";
+
+    if (method === "PUT") {
+        const courseid = params.courseid;
+        url = url + "/" + courseid;
+    }
+
+    const eventData = {
+        title: data.get("title"),
+        image: data.get("image"),
+        description: data.get("description"),
+    };
+
+    const response = await fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(eventData),
+    });
+
+    if (response.ok) {
+        return redirect("/courses");
+    }
 }
