@@ -1,6 +1,6 @@
 import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage, CourseCreatePage, CourseEditPage, coursesLoader, courseDetailsLoader, courseAction } from "./pages/";
+import { HomePage, AboutPage, CoursesPage, ContactPage, FaqPage, CourseDetailsPage, CourseCreatePage, CourseEditPage, coursesLoader, courseDetailsLoader, courseAction, NotFoundPage } from "./pages/";
 import { MainLayout, CourseLayout, HelpLayout } from "./layouts";
 import { courseDeleteAction } from "./pages/course/Courses";
 
@@ -60,6 +60,7 @@ const router = createBrowserRouter([
                     },
                 ],
             },
+            { path: "*", element: <NotFoundPage /> },
         ],
     },
 ]);
