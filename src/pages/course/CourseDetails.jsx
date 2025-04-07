@@ -34,6 +34,13 @@ export default function CourseDetails() {
 
 export async function courseDetailsLoader({ params }) {
     const { courseid } = params;
-    const res = await fetch(`http://localhost:5000/courses/` + courseid);
-    return res.json();
+    const response = await fetch(`http://localhost:5000/courses/` + courseid);
+
+    if (!response.ok) {
+        throw new Response("Course not found", {
+            status: 404,
+        });
+    }
+
+    return response.json();
 }

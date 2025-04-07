@@ -13,6 +13,7 @@ export { default as CourseCreatePage } from "./course/CourseCreate";
 
 //ERROR
 export { default as NotFoundPage } from "./error/NotFoundPage.jsx";
+export { default as ErrorPage } from "./error/ErrorPage.jsx";
 
 //ACTIONS
 export { coursesLoader } from "./course/Courses";
