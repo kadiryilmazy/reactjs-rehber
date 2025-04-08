@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProductList from "../components/ProductList";
+import Loading from "../components/Loading";
 
 export default function ProductsPage() {
     const [loadedProducts, setLoadedProducts] = useState([]);
@@ -19,9 +20,7 @@ export default function ProductsPage() {
         }
     }, []);
     if (loading) {
-        return <div>Loading...</div>;
-    } else if (loadedProducts.length === 0) {
-        return <div>No products found</div>;
+        return <Loading />;
     } else if (loadedProducts.length > 0) {
         return (
             <ProductList products={loadedProducts}>

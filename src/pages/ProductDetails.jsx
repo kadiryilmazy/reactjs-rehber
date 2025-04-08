@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ProductItem from "../components/ProductItem";
+import Loading from "../components/Loading";
 
 export default function ProductDetail() {
     const { id } = useParams();
@@ -23,7 +24,7 @@ export default function ProductDetail() {
     }, [id]);
 
     if (loading) {
-        return <h1>Loading...</h1>;
+        return <Loading />;
     }
     return <ProductItem product={product}></ProductItem>;
 }
