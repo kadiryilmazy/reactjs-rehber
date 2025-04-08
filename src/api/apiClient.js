@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 axios.defaults.baseURL = "http://localhost:5000/";
 
@@ -7,7 +8,12 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.log("Error in API call:", error);
+        const { data, status } = error.response;
+        switch (status) {
+            case 404:
+                toast.error("Not Found - 404", data);
+                break;
+        }
         return Promise.reject(error.message);
     }
 );
