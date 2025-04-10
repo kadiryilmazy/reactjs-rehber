@@ -21,8 +21,9 @@ axios.interceptors.response.use(
                 toast.error(data.message);
                 break;
             case 404:
-                toast.error(data.message);
-                break;
+                router.navigate("/errors/not-found", {
+                    state: { error: data, status: status },
+                });
             case 500:
                 router.navigate("/errors/server-error", {
                     state: { error: data, status: status },

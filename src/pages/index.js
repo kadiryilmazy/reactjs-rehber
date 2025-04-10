@@ -12,3 +12,4 @@ export { default as ProductDetailsPage } from "./ProductDetails";
 //ERRORS
 export { default as ErrorPage } from "./errors/Error";
 export { default as ServerErrorPage } from "./errors/ServerError";
+export { default as NotFoundPage } from "./errors/NotFound";

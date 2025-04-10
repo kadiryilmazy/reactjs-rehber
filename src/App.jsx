@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "@/layouts/MainLayout";
 import { HomePage, ProductsPage, CartPage, LoginPage, RegisterPage, ProductDetailsPage, ErrorPage, ServerErrorPage } from "@/pages/index.js";
+import { NotFoundPage } from "./pages";
 
 export const router = createBrowserRouter([
     {
@@ -51,7 +52,15 @@ export const router = createBrowserRouter([
                         path: "server-error",
                         element: <ServerErrorPage />,
                     },
+                    {
+                        path: "not-found",
+                        element: <NotFoundPage />,
+                    },
                 ],
+            },
+            {
+                path: "*",
+                element: <NotFoundPage />,
             },
         ],
     },
