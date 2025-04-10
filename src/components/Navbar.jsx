@@ -10,6 +10,7 @@ function Navbar() {
     const links = [
         { to: "/home", title: "Home" },
         { to: "/products", title: "Products" },
+        { to: "/errors", title: "Errors" },
     ];
     const authLinks = [
         { to: "/login", title: "login" },
