@@ -2,71 +2,48 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import MainLayout from "@/layouts/MainLayout";
 import { HomePage, ProductsPage, CartPage, LoginPage, RegisterPage, ProductDetailsPage, ErrorPage, ServerErrorPage } from "@/pages/index.js";
 import { NotFoundPage } from "./pages";
+import requests from "./api/apiClient";
+import { useEffect } from "react";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <MainLayout />,
         children: [
-            {
-                index: true,
-                element: <HomePage />,
-            },
-            {
-                path: "home",
-                element: <HomePage />,
-            },
+            { index: true, element: <HomePage /> },
+            { path: "home", element: <HomePage /> },
             {
                 path: "products",
                 children: [
-                    {
-                        index: true,
-                        element: <ProductsPage />,
-                    },
-                    {
-                        path: ":id",
-                        element: <ProductDetailsPage />,
-                    },
+                    { index: true, element: <ProductsPage /> },
+                    { path: ":id", element: <ProductDetailsPage /> },
                 ],
             },
-            {
-                path: "cart",
-                element: <CartPage />,
-            },
-            {
-                path: "login",
-                element: <LoginPage />,
-            },
-            {
-                path: "register",
-                element: <RegisterPage />,
-            },
+            { path: "cart", element: <CartPage /> },
+            { path: "login", element: <LoginPage /> },
+            { path: "register", element: <RegisterPage /> },
             {
                 path: "errors",
                 children: [
-                    {
-                        index: true,
-                        element: <ErrorPage />,
-                    },
-                    {
-                        path: "server-error",
-                        element: <ServerErrorPage />,
-                    },
-                    {
-                        path: "not-found",
-                        element: <NotFoundPage />,
-                    },
+                    { index: true, element: <ErrorPage /> },
+                    { path: "server-error", element: <ServerErrorPage /> },
+                    { path: "not-found", element: <NotFoundPage /> },
                 ],
             },
-            {
-                path: "*",
-                element: <NotFoundPage />,
-            },
+            { path: "*", element: <NotFoundPage /> },
         ],
     },
 ]);
 
 function App() {
+    useEffect(() => {
+        requests.cart
+            .get()
+            .then((cart) => console.log(cart))
+            .catch((error) => console.log(error));
+    }, []);
+
     return <RouterProvider router={router} />;
 }
+
 export default App;
