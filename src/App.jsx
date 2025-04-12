@@ -3,6 +3,7 @@ import MainLayout from "@/layouts/MainLayout";
 import { HomePage, ProductsPage, CartPage, LoginPage, RegisterPage, ProductDetailsPage, ErrorPage, ServerErrorPage } from "@/pages/index.js";
 import { NotFoundPage } from "./pages";
 import requests from "./api/apiClient";
+import { useCartContext } from "./context/CartContext";
 import { useEffect } from "react";
 
 export const router = createBrowserRouter([
@@ -36,10 +37,12 @@ export const router = createBrowserRouter([
 ]);
 
 function App() {
+    const { setCart } = useCartContext();
+
     useEffect(() => {
         requests.cart
             .get()
-            .then((cart) => console.log(cart))
+            .then((cart) => setCart(cart))
             .catch((error) => console.log(error));
     }, []);
 
