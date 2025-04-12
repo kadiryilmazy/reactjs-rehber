@@ -9,26 +9,27 @@ import requests from "../api/apiClient";
 
 export default function CartPage() {
     const { cart, setCart } = useCartContext();
-    const [loading, setLoading] = useState(false);
+    const [status, setStatus] = useState({ loading: false, id: "" });
 
     if (!cart || cart.cartItems.length === 0) return <Typography component="h4">Sepetinizde ürün yok</Typography>;
 
-    function handleAddItem(productId) {
-        setLoading(true);
+    function handleAddItem(productId, id) {
+        setStatus({ loading: true, id: id });
         requests.cart
             .addItem(productId)
             .then((cart) => setCart(cart))
             .catch((error) => console.log(error))
-            .finally(() => setLoading(false));
+            .finally(() => setStatus({ loading: false, id: "" }));
     }
 
-    function handleRemoveItem(productId, quantity = 1) {
-        setLoading(true);
+    function handleRemoveItem(productId, id, quantity = 1) {
+        setStatus({ loading: true, id: id });
+
         requests.cart
             .deleteItem(productId, quantity)
             .then((cart) => setCart(cart))
             .catch((error) => console.log(error))
-            .finally(() => setLoading(false));
+            .finally(() => setStatus({ loading: false, id: "" }));
     }
 
     return (
@@ -53,16 +54,20 @@ export default function CartPage() {
                             <TableCell>{item.product.title}</TableCell>
                             <TableCell>{currencyTRY.format(item.product.price)}</TableCell>
                             <TableCell>
-                                <Button onClick={() => handleAddItem(item.product.productId)}>{loading ? <CircularProgress size="20px" /> : <AddCircleOutlineIcon />}</Button>
+                                <Button onClick={() => handleAddItem(item.product.productId, "add" + item.product.productId)}>
+                                    {status.loading && status.id === "add" + item.product.productId ? <CircularProgress size="20px" /> : <AddCircleOutlineIcon />}
+                                </Button>
 
                                 {item.product.quantity}
-                                <Button onClick={() => handleRemoveItem(item.product.productId)}>{loading ? <CircularProgress size="20px" /> : <RemoveCircleOutlineIcon />}</Button>
+                                <Button onClick={() => handleRemoveItem(item.product.productId, "remove" + item.product.productId)}>
+                                    {status.loading && status.id === "remove" + item.product.productId ? <CircularProgress size="20px" /> : <RemoveCircleOutlineIcon />}
+                                </Button>
                             </TableCell>
                             <TableCell>{currencyTRY.format(item.product.price * item.product.quantity)}</TableCell>
                             <TableCell>
-                                <IconButton color="error">
-                                    <Delete />
-                                </IconButton>
+                                <Button color="error" onClick={() => handleRemoveItem(item.product.productId, "remove_all" + item.product.productId, item.product.quantity)}>
+                                    {status.loading && status.id === "remove_all" + item.product.productId ? <CircularProgress size="20px" /> : <Delete />}
+                                </Button>
                             </TableCell>
                         </TableRow>
                     ))}
