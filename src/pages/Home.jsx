@@ -1,5 +1,10 @@
 import React from "react";
+import Counter from "./counter/Counter";
 
 export default function HomePage() {
-    return <div>HomePage</div>;
+    return (
+        <div>
+            <Counter />
+        </div>
+    );
 }
