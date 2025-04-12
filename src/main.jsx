@@ -3,11 +3,15 @@ import "./index.css";
 import App from "./App.jsx";
 import React from "react";
 import { CartContextProvider } from "@/context/CartContext.jsx";
+import { Provider } from "react-redux";
+import { store } from "@/store/store.js";
 
 createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <CartContextProvider>
-            <App />
-        </CartContextProvider>
+        <Provider store={store}>
+            <CartContextProvider>
+                <App />
+            </CartContextProvider>
+        </Provider>
     </React.StrictMode>
 );
