@@ -1,4 +1,3 @@
-export { default as CartPage } from "./Cart";
 export { default as HomePage } from "./Home";
 
 //AUTH
