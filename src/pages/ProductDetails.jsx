@@ -4,24 +4,18 @@ import ProductItem from "../components/ProductItem";
 import Loading from "../components/Loading";
 import requests from "../api/apiClient";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "./cart/cartSlicer";
+import { addItemToCart } from "./cart/cartSlicer";
 
 export default function ProductDetail() {
     const { id } = useParams();
     const [loading, setLoading] = useState(true);
-    const [isAdding, setIsAdding] = useState(false);
-    const { cart } = useSelector((state) => state.cart);
+    const { cart, status } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
     const [product, setProduct] = useState(null);
     const cartItem = cart?.cartItems.find((item) => item.product.productId === id);
 
     function handleAddItem(productId) {
-        setIsAdding(true);
-        requests.cart
-            .addItem(productId)
-            .then((cart) => dispatch(setCart(cart)))
-            .catch((error) => console.log(error))
-            .finally(() => setIsAdding(false));
+        dispatch(addItemToCart({ productId: productId }));
     }
 
     useEffect(() => {
@@ -44,5 +38,12 @@ export default function ProductDetail() {
     if (!product) {
         return <div>Product not found</div>;
     }
-    return <ProductItem product={product} handleAddItem={handleAddItem} cartItem={cartItem} isAdding={isAdding}></ProductItem>;
+    return (
+        <ProductItem
+            product={product}
+            handleAddItem={handleAddItem}
+            cartItem={cartItem}
+            isAdding={status === "pendingAddItem" + product.productId}
+        ></ProductItem>
+    );
 }

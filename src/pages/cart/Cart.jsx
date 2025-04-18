@@ -1,16 +1,25 @@
-import { Button, CircularProgress, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import {
+    Button,
+    CircularProgress,
+    IconButton,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+} from "@mui/material";
 import { currencyTRY } from "../../utils/formats";
 import { Delete } from "@mui/icons-material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
-import { useState } from "react";
-import requests from "../../api/apiClient";
 import { useDispatch, useSelector } from "react-redux";
-import { setCart } from "./cartSlicer";
+import { addItemToCart, deleteItemFromCart } from "./cartSlicer";
 
 export default function CartPage() {
-    const [status, setStatus] = useState({ loading: false, id: "" });
-    const { cart } = useSelector((state) => state.cart);
+    const { cart, status } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const subTotal = cart?.cartItems.reduce((sub, item) => sub + item.product.price * item.product.quantity, 0);
@@ -19,27 +28,11 @@ export default function CartPage() {
 
     if (!cart || cart.cartItems.length === 0) return <Typography component="h4">Sepetinizde ürün yok</Typography>;
 
-    function handleAddItem(productId, id) {
-        setStatus({ loading: true, id: id });
-        requests.cart
-            .addItem(productId)
-            .then((cart) => dispatch(setCart(cart)))
-            .catch((error) => console.log(error))
-            .finally(() => setStatus({ loading: false, id: "" }));
-    }
-
-    function handleRemoveItem(productId, id, quantity = 1) {
-        setStatus({ loading: true, id: id });
-
-        requests.cart
-            .deleteItem(productId, quantity)
-            .then((cart) => dispatch(setCart(cart)))
-            .catch((error) => console.log(error))
-            .finally(() => setStatus({ loading: false, id: "" }));
-    }
-
     return (
-        <TableContainer component={Paper} sx={{ margin: "auto", marginTop: 5 }}>
+        <TableContainer
+            component={Paper}
+            sx={{ margin: "auto", marginTop: 5 }}
+        >
             <Table sx={{ minWidth: 650 }}>
                 <TableHead>
                     <TableRow>
@@ -55,46 +48,102 @@ export default function CartPage() {
                     {cart.cartItems.map((item) => (
                         <TableRow key={item.id}>
                             <TableCell>
-                                <img src={`http://localhost:5000/images/${item.product.image}`} style={{ width: "100%" }} />
+                                <img
+                                    src={`http://localhost:5000/images/${item.product.image}`}
+                                    style={{
+                                        width: "100%",
+                                    }}
+                                />
                             </TableCell>
                             <TableCell>{item.product.title}</TableCell>
                             <TableCell>{currencyTRY.format(item.product.price)}</TableCell>
                             <TableCell>
-                                <IconButton onClick={() => handleAddItem(item.product.productId, "add" + item.product.productId)}>
-                                    {status.id === "add" + item.product.productId && status.loading ? <CircularProgress size="20px" /> : <AddCircleOutlineIcon />}
+                                <IconButton
+                                    onClick={() =>
+                                        dispatch(
+                                            addItemToCart({
+                                                productId: item.product.productId,
+                                                quantity: 1,
+                                                key: "single",
+                                            })
+                                        )
+                                    }
+                                >
+                                    {status === "pendingAddItem" + item.product.productId ? (
+                                        <CircularProgress size="20px" />
+                                    ) : (
+                                        <AddCircleOutlineIcon />
+                                    )}
                                 </IconButton>
 
                                 {item.product.quantity}
 
-                                <IconButton onClick={() => handleRemoveItem(item.product.productId, "remove" + item.product.productId)}>
-                                    {status.id === "remove" + item.product.productId && status.loading ? <CircularProgress size="20px" /> : <RemoveCircleOutlineIcon />}
+                                <IconButton
+                                    onClick={() =>
+                                        dispatch(
+                                            deleteItemFromCart({
+                                                productId: item.product.productId,
+                                                quantity: 1,
+                                            })
+                                        )
+                                    }
+                                >
+                                    {status === "pendingDeleteItem" + item.product.productId + "single" ? (
+                                        <CircularProgress size="20px" />
+                                    ) : (
+                                        <RemoveCircleOutlineIcon />
+                                    )}
                                 </IconButton>
                             </TableCell>
                             <TableCell>{currencyTRY.format(item.product.price * item.product.quantity)}</TableCell>
                             <TableCell>
-                                <IconButton color="error" onClick={() => handleRemoveItem(item.product.productId, "remove_all" + item.product.productId, item.product.quantity)}>
-                                    {status.id === "remove_all" + item.product.productId && status.loading ? <CircularProgress size="20px" /> : <Delete />}
+                                <IconButton
+                                    color="error"
+                                    onClick={() =>
+                                        dispatch(
+                                            deleteItemFromCart({
+                                                productId: item.product.productId,
+                                                quantity: item.product.quantity,
+                                                key: "all",
+                                            })
+                                        )
+                                    }
+                                >
+                                    {status === "pendingDeleteItem" + item.product.productId + "all" ? (
+                                        <CircularProgress size="20px" />
+                                    ) : (
+                                        <Delete />
+                                    )}
                                 </IconButton>
                             </TableCell>
                         </TableRow>
                     ))}
 
                     <TableRow>
-                        <TableCell colSpan={5} align="right">
+                        <TableCell
+                            colSpan={5}
+                            align="right"
+                        >
                             <Typography>Ara Toplam</Typography>
                         </TableCell>
                         <TableCell>{currencyTRY.format(subTotal)}</TableCell>
                     </TableRow>
 
                     <TableRow>
-                        <TableCell colSpan={5} align="right">
+                        <TableCell
+                            colSpan={5}
+                            align="right"
+                        >
                             <Typography>KDV (20%)</Typography>
                         </TableCell>
                         <TableCell>{currencyTRY.format(tax)}</TableCell>
                     </TableRow>
 
                     <TableRow>
-                        <TableCell colSpan={5} align="right">
+                        <TableCell
+                            colSpan={5}
+                            align="right"
+                        >
                             <Typography>Genel Toplam</Typography>
                         </TableCell>
                         <TableCell>

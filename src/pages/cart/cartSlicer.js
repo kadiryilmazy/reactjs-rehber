@@ -11,8 +11,20 @@ export const addItemToCart = createAsyncThunk("cart/addItemToCart", async ({ pro
         return await requests.cart.addItem(productId, quantity);
     } catch (error) {
         console.log(error);
+        throw error;
     }
 });
+export const deleteItemFromCart = createAsyncThunk(
+    "cart/deleteItemFromCart",
+    async ({ productId, quantity = 1, key = "" }) => {
+        try {
+            return await requests.cart.deleteItem(productId, quantity, key);
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+);
 
 export const cartSlicer = createSlice({
     name: "cart",
@@ -23,18 +35,31 @@ export const cartSlicer = createSlice({
         },
     },
     extraReducers: (builder) => {
+        /*ADD */
         builder.addCase(addItemToCart.pending, (state, action) => {
-            console.log(action);
             state.status = "pendingAddItem" + action.meta.arg.productId;
         });
 
         builder.addCase(addItemToCart.fulfilled, (state, action) => {
-            console.log(action);
             state.cart = action.payload;
             state.status = "idle";
         });
 
         builder.addCase(addItemToCart.rejected, (state) => {
+            state.status = "idle";
+        });
+
+        /*DELETE */
+        builder.addCase(deleteItemFromCart.pending, (state, action) => {
+            state.status = "pendingDeleteItem" + action.meta.arg.productId + action.meta.arg.key;
+        });
+
+        builder.addCase(deleteItemFromCart.fulfilled, (state, action) => {
+            state.cart = action.payload;
+            state.status = "idle";
+        });
+
+        builder.addCase(deleteItemFromCart.rejected, (state) => {
             state.status = "idle";
         });
     },
