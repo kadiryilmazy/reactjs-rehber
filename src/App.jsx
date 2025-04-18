@@ -7,7 +7,7 @@ import requests from "./api/apiClient";
 import { useEffect } from "react";
 import { setCart } from "./pages/cart/cartSlicer";
 import { useDispatch } from "react-redux";
-
+import CartPage from "./pages/cart/Cart";
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
                     { path: ":id", element: <ProductDetailsPage /> },
                 ],
             },
-            { path: "cart", element: <Cart /> },
+            { path: "cart", element: <CartPage /> },
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
             {

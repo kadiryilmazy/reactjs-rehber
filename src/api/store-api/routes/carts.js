@@ -1,54 +1,61 @@
 const express = require("express");
 
-const {
-  getCart,
-  addItemToCart,
-  removeItem,
-  cartToDTO,
-} = require("../data/carts");
+const { getCart, addItemToCart, removeItem, cartToDTO } = require("../data/carts");
 
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
-  try {
-    const cart = await getCart(req.cookies.customerId);
+    try {
+        const cart = await getCart(req.cookies.customerId);
 
-    res.cookie("customerId", cart.customerId, {
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      httpOnly: true,
-    });
+        res.cookie("customerId", cart.customerId, {
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            httpOnly: true,
+        });
 
-    return res.status(200).json(await cartToDTO(cart));
-  } catch (error) {
-    next(error);
-  }
+        return res.status(200).json(await cartToDTO(cart));
+    } catch (error) {
+        next(error);
+    }
 });
 
 router.post("/", async (req, res, next) => {
-  try {
-    let cart = await getCart(req.cookies.customerId);
-    const productId = req.query.productId;
-    const quantity = parseInt(req.query.quantity ?? 1);
+    try {
+        const productId = req.query.productId;
+        const quantity = parseInt(req.query.quantity ?? 1);
 
-    cart = await addItemToCart(productId, quantity, req.cookies.customerId);
+        const product = products.find((p) => p.id === productId);
 
-    return res.status(201).json(await cartToDTO(cart));
-  } catch (error) {
-    next(error);
-  }
+        if (!product) {
+            const error = new Error("Ürün bulunamadı");
+            error.status = 404;
+            throw error;
+        }
+
+        // Cart işlemleri...
+        const cart = {
+            items: [{ product, quantity }],
+            total: product.price * quantity,
+        };
+
+        res.status(200).json(cart);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
 });
 
 router.delete("/", async (req, res, next) => {
-  try {
-    const productId = req.query.productId;
-    const quantity = parseInt(req.query.quantity);
+    try {
+        const productId = req.query.productId;
+        const quantity = parseInt(req.query.quantity);
 
-    let cart = await removeItem(productId, quantity, req.cookies.customerId);
+        let cart = await removeItem(productId, quantity, req.cookies.customerId);
 
-    return res.status(200).json(await cartToDTO(cart));
-  } catch (error) {
-    next(error);
-  }
+        return res.status(200).json(await cartToDTO(cart));
+    } catch (error) {
+        next(error);
+    }
 });
 
 // const getCustomerId = (req) => {

@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCart } from "./cartSlicer";
 
 export default function CartPage() {
+    const [status, setStatus] = useState({ loading: false, id: "" });
     const { cart } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
-    const [status, setStatus] = useState({ loading: false, id: "" });
     const subTotal = cart?.cartItems.reduce((sub, item) => sub + item.product.price * item.product.quantity, 0);
     const tax = subTotal * 0.2;
     const total = subTotal + tax;
