@@ -1,7 +1,24 @@
 import { LockOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, colors, Container, Paper, TextField, Typography } from "@mui/material";
+import { useState } from "react";
 
 export default function LoginPage() {
+    const [values, setValues] = useState({
+        username: "",
+        password: "",
+    });
+
+    function handleSubmit(e) {
+        e.preventDefault();
+    }
+
+    function handleInputChange(e) {
+        const { name, value } = e.target;
+        setValues((values) => ({
+            [name]: value,
+        }));
+    }
+
     return (
         <Container maxWidth="xs">
             <Paper
@@ -19,10 +36,13 @@ export default function LoginPage() {
                     Login
                 </Typography>
                 <Box
+                    onSubmit={handleSubmit}
                     component="form"
                     sx={{ mb: 2 }}
                 >
                     <TextField
+                        value={values.username}
+                        onChange={handleInputChange}
                         name="username"
                         label="Enter username"
                         size="small"
@@ -32,6 +52,8 @@ export default function LoginPage() {
                         sx={{ mb: 2 }}
                     />
                     <TextField
+                        value={values.password}
+                        onChange={handleInputChange}
                         name="password"
                         type="password"
                         label="Enter password"
