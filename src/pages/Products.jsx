@@ -25,7 +25,10 @@ export default function ProductsPage() {
         return (
             <ProductList products={loadedProducts}>
                 {loadedProducts.map((product) => (
-                    <div key={product.id} className="product-item">
+                    <div
+                        key={product.id}
+                        className="product-item"
+                    >
                         <h2>{product.name}</h2>
                         <p>{product.description}</p>
                         <p>${product.price}</p>

@@ -8,7 +8,6 @@ export const fetchProducts = createAsyncThunk("catalog/fetchProducts", async () 
 export const fetchProductById = createAsyncThunk("catalog/fetchProductById", async (productId) => {
     return await requests.products.details(productId);
 });
-
 const productsAdapter = createEntityAdapter();
 
 const initialState = productsAdapter.getInitialState({
@@ -21,30 +20,32 @@ export const catalogSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder
-            .addCase(fetchProducts.pending, (state) => {
-                state.status = "pendingFetchProducts";
-            })
-            .addCase(fetchProducts.fulfilled, (state, action) => {
-                productsAdapter.setAll(action.payload, state);
-                state.status = "idle";
-                state.isLoaded = true;
-            })
-            .addCase(fetchProducts.rejected, (state) => {
-                state.status = "idle";
-            })
+        builder.addCase(fetchProducts.pending, (state) => {
+            state.status = "pendingFetchProducts";
+        });
 
-            .addCase(fetchProductById.pending, (state) => {
-                state.status = "pendingFetchProductById";
-            })
-            .addCase(fetchProductById.fulfilled, (state, action) => {
-                productsAdapter.upsertOne(action.payload, state);
-                state.status = "idle";
-                state.isLoaded = true;
-            })
-            .addCase(fetchProductById.rejected, (state) => {
-                state.status = "idle";
-            });
+        builder.addCase(fetchProducts.fulfilled, (state, action) => {
+            productsAdapter.setAll(state, action.payload);
+            state.isLoaded = true;
+            state.status = "idle";
+        });
+
+        builder.addCase(fetchProducts.rejected, (state) => {
+            state.status = "idle";
+        });
+
+        builder.addCase(fetchProductById.pending, (state) => {
+            state.status = "pendingFetchProductById";
+        });
+
+        builder.addCase(fetchProductById.fulfilled, (state, action) => {
+            productsAdapter.upsertOne(state, action.payload);
+            state.status = "idle";
+        });
+
+        builder.addCase(fetchProductById.rejected, (state) => {
+            state.status = "idle";
+        });
     },
 });
 
