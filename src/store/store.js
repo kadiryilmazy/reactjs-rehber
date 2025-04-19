@@ -10,5 +10,6 @@ export const store = configureStore({
     reducer: {
         counter: counterSlice.reducer,
         cart: cartSlicer.reducer,
+        catalog: cartSlicer.reducer,
     },
 });
