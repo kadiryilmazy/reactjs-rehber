@@ -7,7 +7,12 @@ export default function LoginPage() {
         register,
         handleSubmit,
         formState: { errors, isValid },
-    } = useForm();
+    } = useForm({
+        defaultValues: {
+            username: "",
+            password: "",
+        },
+    });
     function handleForm(data, e) {
         e.preventDefault();
         console.log(data);

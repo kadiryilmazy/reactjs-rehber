@@ -52,6 +52,12 @@
     ],
     "users": [
         {
+            "id": "d68a7a7d-956c-45e9-af93-fa16de2dc06e",
+            "username": "kadiryilmazy",
+            "email": "kadiryilmazy@hotmail.com",
+            "password": "$2a$10$SJxZqP7SRIxHuU98zyS5VOOig270KdPjKtwwlCFG306yfA9PA9S5a"
+        },
+        {
             "id": "e10c4c6d-b804-4c1f-9dfb-9b3396a20243",
             "username": "sadikturan",
             "email": "info@sadikturan.com",

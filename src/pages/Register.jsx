@@ -1,7 +1,31 @@
 import { LockOutlined } from "@mui/icons-material";
-import { Avatar, Box, Button, colors, Container, Paper, TextField, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import requests from "../api/apiClient";
+import { useNavigate } from "react-router";
 
 export default function RegisterPage() {
+    const navigate = useNavigate();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isValid },
+    } = useForm({
+        defaultValues: {
+            username: "",
+            email: "",
+            password: "",
+        },
+    });
+    function handleForm(data, e) {
+        requests.account
+            .register(data)
+            .then((result) => navigate("/login"))
+            .catch((error) => console.log(error));
+
+        e.preventDefault();
+    }
+
     return (
         <Container maxWidth="xs">
             <Paper
@@ -19,34 +43,57 @@ export default function RegisterPage() {
                     Register
                 </Typography>
                 <Box
+                    onSubmit={handleSubmit(handleForm)}
                     component="form"
+                    noValidate
                     sx={{ mb: 2 }}
                 >
                     <TextField
-                        name="username"
-                        label="Enter username"
+                        {...register("username", {
+                            required: "Kullanıcı adı zorunludur.",
+                            minLength: { value: 3, message: "En az 3 karakter girin." },
+                            maxLength: { value: 20, message: "En fazla 20 karakter girin." },
+                        })}
+                        label="Kullanıcı Adı"
                         size="small"
                         fullWidth
-                        required
                         autoFocus
-                        sx={{ mb: 2 }}
+                        variant="outlined"
+                        sx={{ mb: 2, borderRadius: 2 }}
+                        helperText={errors.username ? errors.username.message : ""}
+                        error={!!errors.username}
                     />
                     <TextField
-                        name="email"
-                        label="Enter email"
+                        {...register("email", {
+                            required: "Kullanıcı emaili zorunludur.",
+                            minLength: { value: 3, message: "En az 3 karakter girin." },
+                            pattern: {
+                                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                                message: "Geçerli bir email adresi girin.",
+                            },
+                        })}
+                        label="Email Adresi"
                         size="small"
                         fullWidth
-                        required
-                        sx={{ mb: 2 }}
+                        autoFocus
+                        variant="outlined"
+                        sx={{ mb: 2, borderRadius: 2 }}
+                        helperText={errors.email ? errors.email.message : ""}
+                        error={!!errors.email}
                     />
+
                     <TextField
-                        name="password"
-                        type="password"
-                        label="Enter password"
+                        {...register("password", {
+                            required: "Şifre zorunludur.",
+                            minLength: { value: 6, message: "En az 6 karakter girin." },
+                        })}
+                        label="Şifre"
                         size="small"
                         fullWidth
-                        required
-                        sx={{ mb: 2 }}
+                        variant="outlined"
+                        sx={{ mb: 2, borderRadius: 2 }}
+                        helperText={errors.password ? errors.password.message : ""}
+                        error={!!errors.password}
                     />
                     <Button
                         type="submit"
