@@ -22,8 +22,6 @@ export default function RegisterPage() {
             .register(data)
             .then((result) => navigate("/login"))
             .catch((error) => console.log(error));
-
-        e.preventDefault();
     }
 
     return (

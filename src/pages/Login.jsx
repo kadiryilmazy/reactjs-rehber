@@ -1,8 +1,11 @@
 import { LockOutlined } from "@mui/icons-material";
 import { Avatar, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
+import requests from "../api/apiClient";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 export default function LoginPage() {
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -14,8 +17,14 @@ export default function LoginPage() {
         },
     });
     function handleForm(data, e) {
-        e.preventDefault();
-        console.log(data);
+        requests.account
+            .login(data)
+            .then((result) => {
+                console.log(result);
+                localStorage.setItem("user", JSON.stringify(result));
+                navigate("/");
+            })
+            .catch((error) => console.log(error));
     }
 
     return (
