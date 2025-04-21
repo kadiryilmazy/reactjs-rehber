@@ -1,15 +1,13 @@
 import { LockOutlined } from "@mui/icons-material";
-import { Avatar, Box, Button, colors, Container, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { Avatar, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 export default function LoginPage() {
-    const { register, handleSubmit } = useForm();
-    const [values, setValues] = useState({
-        username: "sadikturan",
-        password: "123456",
-    });
-
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isValid },
+    } = useForm();
     function handleForm(data, e) {
         e.preventDefault();
         console.log(data);
@@ -34,29 +32,42 @@ export default function LoginPage() {
                 <Box
                     onSubmit={handleSubmit(handleForm)}
                     component="form"
+                    noValidate
                     sx={{ mb: 2 }}
                 >
                     <TextField
-                        {...register("username")}
-                        label="Enter username"
+                        {...register("username", {
+                            required: "Kullanıcı adı zorunludur.",
+                            minLength: { value: 3, message: "En az 3 karakter girin." },
+                            maxLength: { value: 20, message: "En fazla 20 karakter girin." },
+                        })}
+                        label="Kullanıcı Adı"
                         size="small"
                         fullWidth
-                        required
                         autoFocus
-                        sx={{ mb: 2 }}
+                        variant="outlined"
+                        sx={{ mb: 2, borderRadius: 2 }}
+                        helperText={errors.username ? errors.username.message : ""}
+                        error={!!errors.username}
                     />
+
                     <TextField
-                        {...register("password")}
-                        type="password"
-                        label="Enter password"
+                        {...register("password", {
+                            required: "Şifre zorunludur.",
+                            minLength: { value: 6, message: "En az 6 karakter girin." },
+                        })}
+                        label="Şifre"
                         size="small"
                         fullWidth
-                        required
-                        sx={{ mb: 2 }}
+                        variant="outlined"
+                        sx={{ mb: 2, borderRadius: 2 }}
+                        helperText={errors.password ? errors.password.message : ""}
+                        error={!!errors.password}
                     />
                     <Button
                         type="submit"
                         variant="contained"
+                        disabled={!isValid}
                         fullWidth
                         sx={{ mt: 1 }}
                         color="secondary"
