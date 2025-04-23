@@ -1,9 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import requests from "./api/apiClient";
-import { useEffect } from "react";
-import { setCart } from "./pages/cart/cartSlicer";
+import { useEffect, useState } from "react";
+import { getCart, setCart } from "./pages/cart/cartSlicer";
 import { useDispatch } from "react-redux";
-import { setUser, logOut } from "./pages/account/accountSlicer";
+import { setUser, logOut, getUser } from "./pages/account/accountSlicer";
+import Loading from "./components/Loading";
 
 import MainLayout from "@/layouts/MainLayout";
 import {
@@ -49,25 +50,18 @@ export const router = createBrowserRouter([
 
 function App() {
     const dispatch = useDispatch();
+    const [loading, setLoading] = useState(true);
+    const initApp = async () => {
+        await dispatch(getUser());
+        await dispatch(getCart());
+    };
 
     useEffect(() => {
-        requests.account
-            .getUser()
-            .then((user) => {
-                setUser(user);
-                localStorage.setItem("user", JSON.stringify(user));
-            })
-            .catch((error) => {
-                console.log(error);
-                dispatch(logOut());
-            });
-
-        requests.cart
-            .get()
-            .then((cart) => dispatch(setCart(cart)))
-            .catch((error) => console.log(error));
+        initApp().then(() => setLoading(false));
     }, []);
-
+    if (loading) {
+        return <Loading message="Uygulama Başlatılıyor..." />;
+    }
     return <RouterProvider router={router} />;
 }
 

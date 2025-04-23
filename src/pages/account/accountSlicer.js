@@ -28,16 +28,24 @@ export const registerUser = createAsyncThunk("account/register", async (data, th
     }
 });
 
-export const getUser = createAsyncThunk("account/getUser", async (_, thunkAPI) => {
-    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
-    try {
-        const user = await requests.account.getUser();
-        localStorage.setItem("user", JSON.stringify(user));
-        return user;
-    } catch (error) {
-        return thunkAPI.rejectWithValue({ message: error.message });
+export const getUser = createAsyncThunk(
+    "account/getUser",
+    async (_, thunkAPI) => {
+        thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+        try {
+            const user = await requests.account.getUser();
+            localStorage.setItem("user", JSON.stringify(user));
+            return user;
+        } catch (error) {
+            return thunkAPI.rejectWithValue({ message: error.message });
+        }
+    },
+    {
+        condition: () => {
+            if (!localStorage.getItem("user")) return false;
+        },
     }
-});
+);
 
 export const accountSlicer = createSlice({
     name: "account",
