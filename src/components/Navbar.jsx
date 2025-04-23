@@ -5,10 +5,12 @@ import { Badge, Box, Button, IconButton } from "@mui/material";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Link, NavLink } from "react-router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useCartContext } from "../context/CartContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "../pages/account/accountSlicer";
 
 function Navbar() {
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.account);
     const { cart } = useSelector((state) => state.cart);
     const itemCount = cart ? cart.cartItems.reduce((total, item) => total + item.product.quantity, 0) : 0;
     const links = [
@@ -21,29 +23,69 @@ function Navbar() {
         { to: "/register", title: "register" },
     ];
     return (
-        <Appbar position="static" sx={{ backgroundColor: "secondary.light" }}>
+        <Appbar
+            position="static"
+            sx={{ backgroundColor: "secondary.light" }}
+        >
             <Toolbar>
                 <Box sx={{ display: "flex", flexGrow: 1, alignItems: "center" }}>
                     <IconButton color="inherit">
                         <StorefrontIcon />
                     </IconButton>
                     {links.map((link) => (
-                        <Button key={link.to} component={NavLink} to={link.to} color="inherit" sx={{ marginLeft: 2 }}>
+                        <Button
+                            key={link.to}
+                            component={NavLink}
+                            to={link.to}
+                            color="inherit"
+                            sx={{ marginLeft: 2 }}
+                        >
                             {link.title}
                         </Button>
                     ))}
                 </Box>
+
                 <Box sx={{ display: "flex" }}>
-                    <IconButton color="inherit" component={Link} to="/cart" size="large" edge="start">
-                        <Badge badgeContent={itemCount} color="secondary">
+                    <IconButton
+                        color="inherit"
+                        component={Link}
+                        to="/cart"
+                        size="large"
+                        edge="start"
+                    >
+                        <Badge
+                            badgeContent={itemCount}
+                            color="secondary"
+                        >
                             <ShoppingCartIcon />
                         </Badge>
                     </IconButton>
-                    {authLinks.map((link) => (
-                        <Button key={link.to} component={NavLink} to={link.to} color="inherit" sx={{ marginLeft: 2 }}>
-                            {link.title}
-                        </Button>
-                    ))}
+                    {user ? (
+                        <>
+                            <Button color="inherit">Welcome {user.username}</Button>
+                            <Button
+                                color="inherit"
+                                onClick={() => dispatch(logOut())}
+                            >
+                                Logout
+                            </Button>
+                        </>
+                    ) : (
+                        <>
+                            {" "}
+                            {authLinks.map((link) => (
+                                <Button
+                                    key={link.to}
+                                    component={NavLink}
+                                    to={link.to}
+                                    color="inherit"
+                                    sx={{ marginLeft: 2 }}
+                                >
+                                    {link.title}
+                                </Button>
+                            ))}
+                        </>
+                    )}
                 </Box>
             </Toolbar>
         </Appbar>

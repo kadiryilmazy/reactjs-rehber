@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "../pages/counter/counterSlice.js";
 import { cartSlicer } from "../pages/cart/cartSlicer.js";
+import { accountSlicer } from "../pages/account/accountSlicer.js";
 
 if (!counterSlice || !counterSlice.reducer) {
     throw new Error("counterSlice is not properly defined or missing a reducer property.");
@@ -11,5 +12,6 @@ export const store = configureStore({
         counter: counterSlice.reducer,
         cart: cartSlicer.reducer,
         catalog: cartSlicer.reducer,
+        account: accountSlicer.reducer,
     },
 });

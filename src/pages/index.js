@@ -1,8 +1,8 @@
 export { default as HomePage } from "./Home";
 
 //AUTH
-export { default as LoginPage } from "./Login";
-export { default as RegisterPage } from "./Register";
+export { default as LoginPage } from "../pages/account/Login";
+export { default as RegisterPage } from "../pages/account/Register";
 
 //PRODUCTS
 export { default as ProductsPage } from "./Products";
