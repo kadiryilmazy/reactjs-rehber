@@ -1,9 +1,43 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { router } from "../../App";
+import requests from "../../api/apiClient";
 
 const initialState = {
     user: null,
+    status: "idle",
 };
+
+export const loginUser = createAsyncThunk("account/login", async (data, thunkAPI) => {
+    try {
+        const user = await requests.account.login(data);
+        localStorage.setItem("user", JSON.stringify(user));
+        router.navigate("/");
+        return user;
+    } catch (error) {
+        return thunkAPI.rejectWithValue({ message: error.message });
+    }
+});
+
+export const registerUser = createAsyncThunk("account/register", async (data, thunkAPI) => {
+    try {
+        await requests.account.register(data);
+        router.navigate("/login");
+    } catch (error) {
+        console.log(error);
+        return thunkAPI.rejectWithValue({ message: error.message });
+    }
+});
+
+export const getUser = createAsyncThunk("account/getUser", async (_, thunkAPI) => {
+    thunkAPI.dispatch(setUser(JSON.parse(localStorage.getItem("user"))));
+    try {
+        const user = await requests.account.getUser();
+        localStorage.setItem("user", JSON.stringify(user));
+        return user;
+    } catch (error) {
+        return thunkAPI.rejectWithValue({ message: error.message });
+    }
+});
 
 export const accountSlicer = createSlice({
     name: "account",
@@ -17,6 +51,42 @@ export const accountSlicer = createSlice({
             localStorage.removeItem("user");
             router.navigate("/login");
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginUser.pending, (state) => {
+            state.status = "pending";
+        });
+        builder.addCase(loginUser.fulfilled, (state, action) => {
+            state.user = action.payload;
+            state.status = "idle";
+        });
+        builder.addCase(loginUser.rejected, (state) => {
+            state.status = "idle";
+        });
+
+        builder.addCase(registerUser.pending, (state) => {
+            state.status = "pending";
+        });
+        builder.addCase(registerUser.fulfilled, (state) => {
+            state.status = "idle";
+        });
+        builder.addCase(registerUser.rejected, (state) => {
+            state.status = "idle";
+        });
+
+        builder.addCase(getUser.pending, (state) => {
+            state.status = "pending";
+        });
+        builder.addCase(getUser.fulfilled, (state, action) => {
+            state.user = action.payload;
+            state.status = "idle";
+        });
+        builder.addCase(getUser.rejected, (state) => {
+            state.user = null;
+            state.status = "idle";
+            localStorage.removeItem("user");
+            router.navigate("/login");
+        });
     },
 });
 

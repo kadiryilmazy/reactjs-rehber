@@ -1,11 +1,17 @@
 import { LockOutlined } from "@mui/icons-material";
-import { Avatar, Box, Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { useForm } from "react-hook-form";
 import requests from "../../api/apiClient";
+
+import { Avatar, Box, Button, CircularProgress, Container, Paper, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser } from "./accountSlicer";
 
 export default function RegisterPage() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { status } = useSelector((state) => state.account);
+
     const {
         register,
         handleSubmit,
@@ -18,10 +24,7 @@ export default function RegisterPage() {
         },
     });
     function handleForm(data, e) {
-        requests.account
-            .register(data)
-            .then((result) => navigate("/login"))
-            .catch((error) => console.log(error));
+        dispatch(registerUser(data));
     }
 
     return (
@@ -100,7 +103,7 @@ export default function RegisterPage() {
                         sx={{ mt: 1 }}
                         color="secondary"
                     >
-                        Submit
+                        {status === "pending" ? <CircularProgress size="25px" /> : "Submit"}
                     </Button>
                 </Box>
             </Paper>

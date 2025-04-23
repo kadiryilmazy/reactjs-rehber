@@ -12,3 +12,6 @@ export { default as ProductDetailsPage } from "./ProductDetails";
 export { default as ErrorPage } from "./errors/Error";
 export { default as ServerErrorPage } from "./errors/ServerError";
 export { default as NotFoundPage } from "./errors/NotFound";
+
+//CART
+export { default as CartPage } from "../pages/cart/cart";
