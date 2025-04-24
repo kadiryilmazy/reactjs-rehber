@@ -14,4 +14,7 @@ export { default as ServerErrorPage } from "./errors/ServerError";
 export { default as NotFoundPage } from "./errors/NotFound";
 
 //CART
-export { default as CartPage } from "../pages/cart/cart";
+export { default as CartPage } from "../pages/cart/Cart";
+
+//CHECKOUT
+export { default as CheckOutPage } from "../pages/checkOut/CheckOut";

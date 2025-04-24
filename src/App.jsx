@@ -1,10 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import requests from "./api/apiClient";
 import { useEffect, useState } from "react";
-import { getCart, setCart } from "./pages/cart/cartSlicer";
+import { getCart } from "./pages/cart/cartSlicer";
 import { useDispatch } from "react-redux";
-import { setUser, logOut, getUser } from "./pages/account/accountSlicer";
+import { getUser } from "./pages/account/accountSlicer";
 import Loading from "./components/Loading";
+import AuthGuard from "./auth/AuthGuard";
 
 import MainLayout from "@/layouts/MainLayout";
 import {
@@ -17,6 +18,7 @@ import {
     ServerErrorPage,
     NotFoundPage,
     CartPage,
+    CheckOutPage,
 } from "@/pages/index.js";
 export const router = createBrowserRouter([
     {
@@ -35,6 +37,8 @@ export const router = createBrowserRouter([
             { path: "cart", element: <CartPage /> },
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
+            { element: <AuthGuard />, children: [{ path: "checkout", element: <CheckOutPage /> }] },
+
             {
                 path: "errors",
                 children: [
