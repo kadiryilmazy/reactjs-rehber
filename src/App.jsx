@@ -19,6 +19,7 @@ import {
     NotFoundPage,
     CartPage,
     CheckOutPage,
+    OrdersPage,
 } from "@/pages/index.js";
 export const router = createBrowserRouter([
     {
@@ -37,7 +38,13 @@ export const router = createBrowserRouter([
             { path: "cart", element: <CartPage /> },
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
-            { element: <AuthGuard />, children: [{ path: "checkout", element: <CheckOutPage /> }] },
+            {
+                element: <AuthGuard />,
+                children: [
+                    { path: "checkout", element: <CheckOutPage /> },
+                    { path: "orders", element: <OrdersPage /> },
+                ],
+            },
 
             {
                 path: "errors",

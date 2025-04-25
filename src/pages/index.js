@@ -18,3 +18,6 @@ export { default as CartPage } from "../pages/cart/Cart";
 
 //CHECKOUT
 export { default as CheckOutPage } from "../pages/checkOut/CheckOut";
+
+//ORDERS
+export { default as OrdersPage } from "../pages/orders/Orders";
