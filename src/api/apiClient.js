@@ -86,11 +86,18 @@ const account = {
     getUser: () => methods.get("users/getUser"),
 };
 
+const orders = {
+    getOrders: () => methods.get("orders"),
+    getOrder: () => methods.get(`orders/${id}`),
+    createOrder: (formData) => methods.post("orders", formData),
+};
+
 const requests = {
     products,
     errors,
     cart,
     account,
+    orders,
 };
 
 export default requests;

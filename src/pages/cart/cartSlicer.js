@@ -40,6 +40,9 @@ export const cartSlicer = createSlice({
         setCart: (state, action) => {
             state.cart = action.payload;
         },
+        clearCart: (state) => {
+            state.cart = null;
+        },
     },
     extraReducers: (builder) => {
         /*ADD */
@@ -77,4 +80,4 @@ export const cartSlicer = createSlice({
     },
 });
 
-export const { setCart } = cartSlicer.actions;
+export const { setCart, clearCart } = cartSlicer.actions;

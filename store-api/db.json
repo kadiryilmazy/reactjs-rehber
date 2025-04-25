@@ -1,1 +1,62 @@
-{"products":[{"id":"1","title":"Mont 1","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"1.jpg","price":"2300"},{"id":"2","title":"Mont 2","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"2.jpg","price":"2100"},{"id":"3","title":"Mont 3","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"3.jpg","price":"2400"},{"id":"4","title":"Mont 4","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"4.jpg","price":"1800"},{"id":"5","title":"Mont 5","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"5.jpg","price":"3200"},{"id":"6","title":"Mont 6","description":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.","image":"6.jpg","price":"3400"}],"carts":[{"id":"0b771903-1687-4e63-95b9-7ba8e03e9894","customerId":"7b8f17ef-d166-4424-9bf4-ae291082aa4c","cartItems":[{"id":"ddf1b644-ea0d-475b-bfd9-ec4a6c7f2792","productId":"1","quantity":14},{"id":"d0ef63d6-65aa-4e30-b45d-a71f91bc76a4","productId":"2","quantity":1},{"id":"2d16e9cf-a9bf-4c9e-91dd-81be76025d42","productId":"3","quantity":1},{"id":"ef27d526-c371-493a-b54e-8e661c563a57","productId":"4","quantity":1},{"id":"7cb9ee38-ff48-4fa2-9baa-6843f7c0706a","productId":"5","quantity":1},{"id":"a644fbd0-5ff7-4415-8372-dc277ee13749","productId":"6","quantity":1}]}],"users":[{"id":"074c3009-97a8-436c-abbd-a77b6bb8a9c1","username":"123456","email":"kadiryilmazy@hotmail.com","password":"$2a$10$AoGxq5nl7PIvf3atSWr7i.NqIR1iCr1Xb3X7ED3P73LyAFDVqk2ue"}],"orders":[]}
+{
+    "products": [
+        {
+            "id": "1",
+            "title": "Mont 1",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "1.jpg",
+            "price": "2300"
+        },
+        {
+            "id": "2",
+            "title": "Mont 2",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "2.jpg",
+            "price": "2100"
+        },
+        {
+            "id": "3",
+            "title": "Mont 3",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "3.jpg",
+            "price": "2400"
+        },
+        {
+            "id": "4",
+            "title": "Mont 4",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "4.jpg",
+            "price": "1800"
+        },
+        {
+            "id": "5",
+            "title": "Mont 5",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "5.jpg",
+            "price": "3200"
+        },
+        {
+            "id": "6",
+            "title": "Mont 6",
+            "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste libero repudiandae quod omnis mollitia nam quo, quisquam quidem consectetur molestias ullam id aliquid, nobis, tempore repellendus iure. Vitae, vel fuga.",
+            "image": "6.jpg",
+            "price": "3400"
+        }
+    ],
+    "carts": [
+        {
+            "id": "0b771903-1687-4e63-95b9-7ba8e03e9894",
+            "customerId": "7b8f17ef-d166-4424-9bf4-ae291082aa4c",
+            "cartItems": []
+        }
+    ],
+    "users": [
+        {
+            "id": "074c3009-97a8-436c-abbd-a77b6bb8a9c1",
+            "username": "123456",
+            "email": "kadiryilmazy@hotmail.com",
+            "password": "$2a$10$AoGxq5nl7PIvf3atSWr7i.NqIR1iCr1Xb3X7ED3P73LyAFDVqk2ue"
+        }
+    ],
+    "orders": []
+}
