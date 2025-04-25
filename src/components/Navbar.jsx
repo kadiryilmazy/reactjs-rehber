@@ -1,18 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Appbar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
-import { Badge, Box, Button, IconButton } from "@mui/material";
+import { Badge, Box, Button, IconButton, Menu, MenuItem } from "@mui/material";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Link, NavLink } from "react-router";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../pages/account/accountSlicer";
+import { KeyboardArrowDown } from "@mui/icons-material";
 
 function Navbar() {
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.account);
     const { cart } = useSelector((state) => state.cart);
     const itemCount = cart ? cart.cartItems.reduce((total, item) => total + item.product.quantity, 0) : 0;
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    function handleClick(event) {
+        setAnchorEl(event.currentTarget);
+    }
+
+    function handleClose() {
+        setAnchorEl(null);
+    }
     const links = [
         { to: "/home", title: "Home" },
         { to: "/products", title: "Products" },
@@ -62,24 +73,38 @@ function Navbar() {
                     </IconButton>
                     {user ? (
                         <>
-                            <Button color="inherit">Welcome {user.username}</Button>
                             <Button
+                                id="user-button"
+                                onClick={handleClick}
+                                endIcon={<KeyboardArrowDown />}
                                 color="inherit"
-                                onClick={() => dispatch(logOut())}
                             >
-                                Logout
+                                {user.username}
                             </Button>
+
+                            <Menu
+                                id="user-menu"
+                                anchorEl={anchorEl}
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                <MenuItem
+                                    component={Link}
+                                    to="/orders"
+                                >
+                                    Orders
+                                </MenuItem>
+                                <MenuItem onClick={() => dispatch(logOut())}>Log Out</MenuItem>
+                            </Menu>
                         </>
                     ) : (
                         <>
-                            {" "}
                             {authLinks.map((link) => (
                                 <Button
                                     key={link.to}
                                     component={NavLink}
                                     to={link.to}
                                     color="inherit"
-                                    sx={{ marginLeft: 2 }}
                                 >
                                     {link.title}
                                 </Button>
