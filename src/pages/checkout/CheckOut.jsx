@@ -20,6 +20,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import requests from "../../api/apiClient";
 import { clearCart } from "../cart/cartSlicer";
+import { Navigate, useNavigate } from "react-router";
 
 const steps = ["Teslimat Bilgileri", "Ödeme", "Sipariş Özeti"];
 
@@ -40,11 +41,14 @@ export default function CheckoutPage() {
     const [orderId, setOrderId] = useState(0);
     const [loading, setLoading] = useState(false);
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     function handlePrevious() {
         setActiveStep(activeStep - 1);
     }
 
+    const handleClick = () => {
+        navigate("/orders");
+    };
     async function handleNext(data) {
         console.log(data);
         if (activeStep === 2) {
@@ -109,6 +113,7 @@ export default function CheckoutPage() {
                                     sx={{ alignSelf: "start" }}
                                     variant="contained"
                                     color="secondary"
+                                    onClick={handleClick}
                                 >
                                     Siparişleri Listele
                                 </Button>
