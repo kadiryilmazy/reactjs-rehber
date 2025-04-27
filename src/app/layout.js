@@ -1,4 +1,5 @@
 import Navigation from "@/components/navigation";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import "./globals.css";
 
 export const metadata = {
@@ -13,11 +14,13 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body>
-                <header>
-                    <Navigation />
-                </header>
-                <main>{children}</main>
-                <footer>Footer</footer>
+                <AppRouterCacheProvider>
+                    <header>
+                        <Navigation />
+                    </header>
+                    <main>{children}</main>
+                    <footer>Footer</footer>
+                </AppRouterCacheProvider>
             </body>
         </html>
     );
