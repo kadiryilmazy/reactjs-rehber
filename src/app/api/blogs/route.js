@@ -10,6 +10,8 @@ export async function GET() {
             driver: sqlite3.Database,
         });
     }
-    const result = await db.all("SELECT * FROM blogs ");
+
+    const result = await db.all("SELECT * FROM blogs");
+
     return Response.json(result);
 }

@@ -4,10 +4,7 @@ import React from "react";
 export default function layout({ children }) {
     return (
         <div>
-            <section>
-                <NavigationForBlogPage />
-                {children}
-            </section>
+            <section>{children}</section>
         </div>
     );
 }
